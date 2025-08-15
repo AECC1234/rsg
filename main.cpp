@@ -2,7 +2,7 @@
 #include <cstring>
 #include <math.h>
 using namespace std;
-#define WORD_IN_EACH_LINE 100
+#define WORD_IN_EACH_LINE 100	//Max words each line!
 
 int main(int argc, char* argv[])
 {
@@ -16,17 +16,43 @@ int main(int argc, char* argv[])
 	char path_to_save[260] = "";
 	time_t t = 0;
 	bool tosave = false;
-	const char* args[4] = {
+	const char* args[4] = {						//Args
 		"-mode",
-		"-coloum",
+		"-column",
 		"-save",
 		"-lines",
 	};
 	
+	//Detecting args and values
 	for (int i = 1; i < 11; i++)
 	{
-		if (argv[i] == NULL) break;
-		if (strcmp(argv[i], args[0]) == 0)
+		if (argv[i] == NULL) 
+		{
+			if (i == 1)
+			{
+				printf("Please input at least one synax to run, exiting!\n");
+				printf("Usage: rsg [-mode] a/A/0/aA/a0/A0/aA0(Default)\n");
+				printf("           [-lines] line\n");
+				printf("           [-column] words_count_each_line\n");
+				printf("           [-save] /path/to/your/file\n");
+				goto end;
+			}
+			break;
+		}
+		else if (i % 2 == 1)
+		{
+			if (argv[i + 1] == NULL)
+			{
+				printf("Synax error, Please check your input!\n");
+				printf("Usage: rsg [-mode] a/A/0/aA/a0/A0/aA0(Default)\n");
+				printf("           [-lines] line\n");
+				printf("           [-column] words_count_each_line\n");
+				printf("           [-save] /path/to/your/file\n");
+				goto end;
+			}
+		}
+
+		if (strcmp(argv[i], args[0]) == 0)			//-mode a A 0 aA a0 A0 aA0
 		{
 			if (strcmp(argv[i + 1], "a") == 0)
 			{
@@ -57,32 +83,28 @@ int main(int argc, char* argv[])
 				mode = 6;
 			}
 		}
-		else if (strcmp(argv[i], args[1]) == 0)
+		else if (strcmp(argv[i], args[1]) == 0)		//Word counts each line
 		{
 			col = stoi(argv[i + 1], 0, 10);
 		}
-		else if (strcmp(argv[i], args[2]) == 0)
+		else if (strcmp(argv[i], args[2]) == 0)		//Save as file
 		{
 			strcpy(path_to_save, argv[i + 1]);
 			tosave = true;
 			fp = fopen(path_to_save, "w+");
 		}
-		else if (strcmp(argv[i], args[3]) == 0)
+		else if (strcmp(argv[i], args[3]) == 0)		//Line count to gen.
 		{
 			len = stoi(argv[i + 1], 0, 10);
-		}
-		else
-		{
-
 		}
 	}
 
 	srand((unsigned)time(&t));
-	for (size_t i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)		//Start generation
 	{
 		for (int i = 0; i < col - 1; i++)
 		{
-			switch (mode)
+			switch (mode)			//Switch Generating mode
 			{
 			case 0:
 				m_switch = 1;
@@ -109,7 +131,7 @@ int main(int argc, char* argv[])
 				break;
 			}
 
-			switch (m_switch)
+			switch (m_switch)		//Essential Codes!
 			{
 			case 0:
 				word[i] = '0' + rand() % 10;
@@ -140,6 +162,7 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
+end:
 	if (tosave && (fp != NULL)) fclose(fp);
 	delete word;
 	return 0;
