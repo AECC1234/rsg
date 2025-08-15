@@ -44,13 +44,17 @@ int main(int argc, char* argv[])
 			{
 				mode = 3;
 			}
-			else if (strcmp(argv[i + 1], "A0") == 0)
+			else if (strcmp(argv[i + 1], "a0") == 0)
 			{
 				mode = 4;
 			}
-			else if (strcmp(argv[i + 1], "aA0") == 0)
+			else if (strcmp(argv[i + 1], "A0") == 0)
 			{
 				mode = 5;
+			}
+			else if (strcmp(argv[i + 1], "aA0") == 0)
+			{
+				mode = 6;
 			}
 		}
 		else if (strcmp(argv[i], args[1]) == 0)
@@ -80,21 +84,24 @@ int main(int argc, char* argv[])
 			switch (mode)
 			{
 			case 0:
-				m_switch = 0;
-				break;
-			case 1:
 				m_switch = 1;
 				break;
-			case 2:
+			case 1:
 				m_switch = 2;
 				break;
-			case 3:
-				m_switch = rand() % 2;
+			case 2:
+				m_switch = 0;
 				break;
-			case 4:
+			case 3:
 				m_switch = rand() % 2 + 1;
 				break;
+			case 4:
+				m_switch = rand() % 2;
+				break;
 			case 5:
+				m_switch = (rand() % 2) * 2;
+				break;
+			case 6:
 				m_switch = rand() % 3;
 				break;
 			default:
@@ -122,10 +129,10 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
-			fp = fopen(path_to_save, "rw");
+			fp = fopen(path_to_save, "w+");
 			if (fp != NULL)
 			{
-				fwrite(word, sizeof(word), 100, fp);
+				fwrite(word, 1, 100, fp);
 				fclose(fp);
 			}
 			else
