@@ -65,6 +65,7 @@ int main(int argc, char* argv[])
 		{
 			strcpy(path_to_save, argv[i + 1]);
 			tosave = true;
+			fp = fopen(path_to_save, "w+");
 		}
 		else if (strcmp(argv[i], args[3]) == 0)
 		{
@@ -129,11 +130,9 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
-			fp = fopen(path_to_save, "w+");
 			if (fp != NULL)
 			{
 				fwrite(word, 1, 100, fp);
-				fclose(fp);
 			}
 			else
 		       	{
@@ -141,6 +140,7 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
+	if (tosave && (fp != NULL)) fclose(fp);
 	delete word;
 	return 0;
 }
