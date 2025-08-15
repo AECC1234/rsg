@@ -12,12 +12,13 @@ int main(int argc, char* argv[])
 	int mode = 0;
 	int col = 100;
 	char* word = new char[WORD_IN_EACH_LINE]();
+	char write[100] = "";
 	char path_to_save[260] = "";
 	time_t t = 0;
 	bool tosave = false;
 	const char* args[4] = {
 		"-mode",
-		"-option",
+		"-coloum",
 		"-save",
 		"-lines",
 	};
@@ -53,7 +54,7 @@ int main(int argc, char* argv[])
 		}
 		else if (strcmp(argv[i], args[1]) == 0)
 		{
-
+			col = stoi(argv[i + 1], 0, 10);
 		}
 		else if (strcmp(argv[i], args[2]) == 0)
 		{
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
 	srand((unsigned)time(&t));
 	for (size_t i = 0; i < len; i++)
 	{
-		for (int i = 0; i < WORD_IN_EACH_LINE - 1; i++)
+		for (int i = 0; i < col - 1; i++)
 		{
 			switch (mode)
 			{
@@ -114,7 +115,24 @@ int main(int argc, char* argv[])
 				continue;
 			}
 		}
-		printf("%s\n", word);
+		if (!tosave)
+		{
+			printf("%s\n", word);
+		}
+		else
+		{
+			fp = fopen(path_to_save, "rw");
+			if (fp != NULL)
+			{
+				fwrite(word, sizeof(word), 100, fp);
+				fclose(fp);
+			}
+			else
+		       	{
+				break;
+			}
+		}
 	}
+	delete word;
 	return 0;
 }
