@@ -85,7 +85,20 @@ int main(int argc, char* argv[])
 		}
 		else if (strcmp(argv[i], args[1]) == 0)		//Word counts each line
 		{
-			col = stoi(argv[i + 1], 0, 10);
+			try 
+			{
+				col = stoi(argv[i + 1], 0, 10);
+			}
+		       	catch (const std::exception& e) 
+			{
+				printf("Invalid column value: '%s' (must be an integer).\n", argv[i + 1]);
+				goto end;
+			}
+			if (col <= 0 || col > WORD_IN_EACH_LINE)
+			{
+				printf("column must be between 1 and %d\n", WORD_IN_EACH_LINE);
+				goto end;
+			}
 		}
 		else if (strcmp(argv[i], args[2]) == 0)		//Save as file
 		{
@@ -95,14 +108,23 @@ int main(int argc, char* argv[])
 		}
 		else if (strcmp(argv[i], args[3]) == 0)		//Line count to gen.
 		{
-			len = stoi(argv[i + 1], 0, 10);
+			try {
+				len = stoi(argv[i + 1], 0, 10);
+			} catch (const std::exception& e) {
+				printf("Invalid lines value: '%s' (must be an integer).\n", argv[i + 1]);
+				goto end;
+			}
+			if (len <= 0) {
+				printf("lines must be positive\n");
+				goto end;
+			}
 		}
 	}
 
 	srand((unsigned)time(&t));
 	for (size_t i = 0; i < len; i++)		//Start generation
 	{
-		for (int i = 0; i < col - 1; i++)
+		for (int j = 0; j < col - 1; j++)
 		{
 			switch (mode)			//Switch Generating mode
 			{
@@ -134,13 +156,13 @@ int main(int argc, char* argv[])
 			switch (m_switch)		//Essential Codes!
 			{
 			case 0:
-				word[i] = '0' + rand() % 10;
+				word[j] = '0' + rand() % 10;
 				break;
 			case 1:
-				word[i] = 'a' + rand() % 26;
+				word[j] = 'a' + rand() % 26;
 				break;
 			case 2:
-				word[i] = 'A' + rand() % 26;
+				word[j] = 'A' + rand() % 26;
 				break;
 			default:
 				continue;
@@ -154,7 +176,8 @@ int main(int argc, char* argv[])
 		{
 			if (fp != NULL)
 			{
-				fwrite(word, 1, 100, fp);
+				fwrite(word, 1, col, fp);
+				fwrite("\n", 1, 1, fp);
 			}
 			else
 		       	{
@@ -164,6 +187,6 @@ int main(int argc, char* argv[])
 	}
 end:
 	if (tosave && (fp != NULL)) fclose(fp);
-	delete word;
+	delete[] word;
 	return 0;
 }
