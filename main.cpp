@@ -9,18 +9,17 @@ int main(int argc, char* argv[])
 	FILE* fp = 0;
 	int m_switch = 0;
 	int len = 200;
-	int mode = 5;
+	int mode = 6;
 	int col = 100;
 	char* word = new char[WORD_IN_EACH_LINE]();
-	char write[100] = "";
 	char path_to_save[260] = "";
 	time_t t = 0;
 	bool tosave = false;
 	const char* args[4] = {						//Args
-		"-mode",
-		"-column",
-		"-save",
-		"-lines",
+		"-m",
+		"-c",
+		"-s",
+		"-l",
 	};
 	
 	//Detecting args and values
@@ -82,6 +81,11 @@ int main(int argc, char* argv[])
 			{
 				mode = 6;
 			}
+			else
+			{
+				printf("No such mode, Please check your input!\n");
+				goto end;
+			}
 		}
 		else if (strcmp(argv[i], args[1]) == 0)		//Word counts each line
 		{
@@ -119,10 +123,15 @@ int main(int argc, char* argv[])
 				goto end;
 			}
 		}
+		else if (i % 2 == 1)
+		{
+			printf("No such parameter:%s, please check your input!\n", argv[i]);
+			goto end;
+		}
 	}
 
 	srand((unsigned)time(&t));
-	for (size_t i = 0; i < len; i++)		//Start generation
+	for (int i = 0; i < len; i++)			//Start generation
 	{
 		for (int j = 0; j < col - 1; j++)
 		{
@@ -181,6 +190,7 @@ int main(int argc, char* argv[])
 			}
 			else
 		       	{
+				printf("Invalid path, please check your input!");
 				break;
 			}
 		}
