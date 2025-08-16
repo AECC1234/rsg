@@ -30,10 +30,10 @@ int main(int argc, char* argv[])
 			if (i == 1)
 			{
 				printf("Please input at least one synax to run, exiting!\n");
-				printf("Usage: rsg [-mode] a/A/0/aA/a0/A0/aA0(Default)\n");
-				printf("           [-lines] line\n");
-				printf("           [-column] words_count_each_line\n");
-				printf("           [-save] /path/to/your/file\n");
+				printf("Usage: rsg [-m] a/A/0/aA/a0/A0/aA0(Default)\n");
+				printf("           [-l] line\n");
+				printf("           [-c] words_count_each_line\n");
+				printf("           [-s] /path/to/your/file\n");
 				goto end;
 			}
 			break;
@@ -43,10 +43,10 @@ int main(int argc, char* argv[])
 			if (argv[i + 1] == NULL)
 			{
 				printf("Synax error, Please check your input!\n");
-				printf("Usage: rsg [-mode] a/A/0/aA/a0/A0/aA0(Default)\n");
-				printf("           [-lines] line\n");
-				printf("           [-column] words_count_each_line\n");
-				printf("           [-save] /path/to/your/file\n");
+				printf("Usage: rsg [-m] a/A/0/aA/a0/A0/aA0(Default)\n");
+				printf("           [-l] line\n");
+				printf("           [-c] words_count_each_line\n");
+				printf("           [-s] /path/to/your/file\n");
 				goto end;
 			}
 		}
