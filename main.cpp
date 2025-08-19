@@ -133,7 +133,7 @@ int main(int argc, char* argv[])
 	srand((unsigned)time(&t));
 	for (int i = 0; i < len; i++)			//Start generation
 	{
-		for (int j = 0; j < col - 1; j++)
+		for (int j = 0; j < col; j++)
 		{
 			switch (mode)			//Switch Generating mode
 			{
@@ -177,6 +177,7 @@ int main(int argc, char* argv[])
 				continue;
 			}
 		}
+		word[col] = '\0';
 		if (!tosave)
 		{
 			printf("%s\n", word);

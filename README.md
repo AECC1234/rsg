@@ -14,6 +14,12 @@ rsg [-m] a/A/0/aA/a0/A0/aA0(Default)
 `-l`: Providing a number larger than 1, it is used to decide how many lines you want to generate.  
 `-c`: Max characters in each line.  
 `-s`: Save the generation result as a file.  
+  
+example:  
+Generate the random strings with 3 types of characters, there have 100 lines will print on the screen, and each line has 50 characters.  
+```bash
+rsg -l 100 -c 50 -m aA0
+```
 ## Installation
 When you downloaded these folder from Github, you firstly start CLI on the folder path, and input following codes to compile this project.  
 ```bash
@@ -23,3 +29,7 @@ Then input following command lines to install on your system.
 ```bash
 sudo make install
 ```
+## Version History
+- **v1.0.1** Fixed some bugs about saving as file, resolved the strange character on the end of each line. (Aug 19, 2025
+)  
+- **v1.0.0** The basic version of this program. (Aug 16, 2025)  
