@@ -17,7 +17,7 @@ rsg [-m] a/A/0/aA/a0/A0/aA0(Default)
 `-s`: Save the generation result as a file.  
 `-v`: Show the version of this program.  
   
-example:  
+Example:  
 Generate the random strings with 3 types of characters, there have 100 lines will print on the screen, and each line has 50 characters.  
 ```bash
 rsg -l 100 -c 50 -m aA0
@@ -30,6 +30,10 @@ make
 Then input following command lines to install on your system.  
 ```bash
 sudo make install
+```  
+If you want to remove the program, you just run this command on the folder path:  
+```bash
+sudo make remove
 ```
 ## Version History
 - **v1.1.0** Added a function about version checking, now you can input `rsg -v` to check your program version. (Aug 20, 2025)  
