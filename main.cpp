@@ -15,15 +15,16 @@ int main(int argc, char* argv[])
 	char path_to_save[260] = "";
 	time_t t = 0;
 	bool tosave = false;
-	const char* args[4] = {						//Args
+	const char* args[5] = {						//Args
 		"-m",
 		"-c",
 		"-s",
 		"-l",
+		"-v"
 	};
 	
 	//Detecting args and values
-	for (int i = 1; i < 11; i++)
+	for (int i = 1; i < 12; i++)
 	{
 		if (argv[i] == NULL) 
 		{
@@ -38,21 +39,14 @@ int main(int argc, char* argv[])
 			}
 			break;
 		}
-		else if (i % 2 == 1)
-		{
-			if (argv[i + 1] == NULL)
-			{
-				printf("Synax error, Please check your input!\n");
-				printf("Usage: rsg [-m] a/A/0/aA/a0/A0/aA0(Default)\n");
-				printf("           [-l] line\n");
-				printf("           [-c] words_count_each_line\n");
-				printf("           [-s] /path/to/your/file\n");
-				goto end;
-			}
-		}
 
 		if (strcmp(argv[i], args[0]) == 0)			//-mode a A 0 aA a0 A0 aA0
 		{
+			if (argv[i + 1] == NULL)
+			{
+				printf("No such mode, Please check your input!\n");
+				goto end;
+			}
 			if (strcmp(argv[i + 1], "a") == 0)
 			{
 				mode = 0;
@@ -103,17 +97,43 @@ int main(int argc, char* argv[])
 				printf("column must be between 1 and %d\n", WORD_IN_EACH_LINE);
 				goto end;
 			}
+			if (argv[i + 1] == NULL)
+			{
+				printf("Please provide a number!\n");
+				goto end;
+			}
 		}
 		else if (strcmp(argv[i], args[2]) == 0)		//Save as file
 		{
-			strcpy(path_to_save, argv[i + 1]);
-			tosave = true;
-			fp = fopen(path_to_save, "w+");
+			if (argv[i + 1] != NULL)
+			{
+				strcpy(path_to_save, argv[i + 1]);
+				tosave = true;
+				fp = fopen(path_to_save, "w+");
+				if (fp == NULL)
+				{
+					printf("Invalid path about %s, please check!\n", path_to_save);
+					goto end;
+				}
+			}
+			else
+			{
+				printf("Invalid path about %s, please check!\n", path_to_save);
+				goto end;
+			}
 		}
 		else if (strcmp(argv[i], args[3]) == 0)		//Line count to gen.
 		{
 			try {
-				len = stoi(argv[i + 1], 0, 10);
+				if (argv[i + 1] != NULL)
+				{
+					len = stoi(argv[i + 1], 0, 10);
+				}
+				else
+				{
+					printf("Please provide a number!\n");
+					goto end;
+				}
 			} catch (const std::exception& e) {
 				printf("Invalid lines value: '%s' (must be an integer).\n", argv[i + 1]);
 				goto end;
@@ -122,6 +142,11 @@ int main(int argc, char* argv[])
 				printf("lines must be positive\n");
 				goto end;
 			}
+		}
+		else if (strcmp(argv[i], args[4]) == 0)
+		{
+			printf("Version 1.1.0 Release\n");
+			goto end;
 		}
 		else if (i % 2 == 1)
 		{
