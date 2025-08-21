@@ -2,6 +2,7 @@
 #include <cstring>
 #include <math.h>
 using namespace std;
+#define VERSION "1.2.0"
 #define WORD_IN_EACH_LINE 100	//Max words each line!
 
 int main(int argc, char* argv[])
@@ -15,26 +16,17 @@ int main(int argc, char* argv[])
 	char path_to_save[260] = "";
 	time_t t = 0;
 	bool tosave = false;
-	const char* args[5] = {						//Args
-		"-m",
-		"-c",
-		"-s",
-		"-l",
-		"-v"
-	};
+	const char* args[6] = {"-m", "-c", "-s", "-l", "-v", "-h"};		//Arguments
 	
 	//Detecting args and values
-	for (int i = 1; i < 12; i++)
+	for (int i = 1; i < 13; i++)
 	{
 		if (argv[i] == NULL) 
 		{
 			if (i == 1)
 			{
-				printf("Please input at least one synax to run, exiting!\n");
-				printf("Usage: rsg [-m] a/A/0/aA/a0/A0/aA0(Default)\n");
-				printf("           [-l] line\n");
-				printf("           [-c] words_count_each_line\n");
-				printf("           [-s] /path/to/your/file\n");
+				printf("No parameters, Exiting...\n");
+				printf("Please use -h to get help.\n");
 				goto end;
 			}
 			break;
@@ -143,12 +135,22 @@ int main(int argc, char* argv[])
 				goto end;
 			}
 		}
-		else if (strcmp(argv[i], args[4]) == 0)
+		else if (strcmp(argv[i], args[4]) == 0)		//Version	
 		{
-			printf("Version 1.1.0 Release\n");
+			printf("Version %s Release\n", VERSION);
 			goto end;
 		}
-		else if (i % 2 == 1)
+		else if (strcmp(argv[i], args[5]) == 0)		//Help
+		{
+			printf("Usage: rsg [-m] a/A/0/aA/a0/A0/aA0(Default)\n");
+			printf("           [-l] line\n");
+			printf("           [-c] words_count_each_line\n");
+			printf("           [-s] /path/to/your/file\n");
+			printf("           [-v] version\n");
+			printf("           [-h] help\n");
+			goto end;
+		}
+		else if (i % 2 == 1)						//If the arg is not recognized
 		{
 			printf("No such parameter:%s, please check your input!\n", argv[i]);
 			goto end;
