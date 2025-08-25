@@ -2,18 +2,18 @@ src = $(filter-out main.cpp, $(wildcard %.cpp))
 obj = $(patsubst %.cpp, ./bin/%.o, $(src))
 arc = $(patsubst %.cpp, ./lib/lib%.a, $(src))
 filename = "rsg"
-values = -Wall
+values = -Wall -I ./includes
 
 ALL: ./build/$(filename)
 ./build/$(filename): main.cpp $(arc)
 	-mkdir build
-	g++ $^ -o $@ -I ./includes $(values)
+	g++ $^ -o $@ $(values)
 ./lib/lib%.cpp: ./bin/%.o
 	-mkdir lib
 	ar rcs $@ $<
 ./bin/%.o:./%.cpp
 	-mkdir bin
-	g++ -c $< -o $@ -I ./includes $(values)
+	g++ -c $< -o $@ $(values)
 
 .PHONY: clean
 clean:
